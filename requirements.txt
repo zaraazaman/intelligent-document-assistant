@@ -1,0 +1,10 @@
+langchain
+streamlit
+llama-cpp-python
+docx
+PyPDF2
+Beautifulsoup4
+requests   
+datetime
+StringIO
+mistral:7b - used locally from ollama
