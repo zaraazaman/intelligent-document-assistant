@@ -17,6 +17,9 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from io import StringIO
 
+
+
+
 st.set_page_config(
     page_title="Intelligent Document Assistant",
     page_icon="📚",
@@ -27,7 +30,6 @@ st.set_page_config(
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-/* Global */
 body, .css-1d391kg, .stApp {
     background-color: #f9f9f9;
     color: #0f766e;
@@ -49,7 +51,6 @@ body, .css-1d391kg, .stApp {
     line-height: 1.6;
     color: #666666;
 }
-/* Feature cards */
 .feature-card {
     background-color: #e0f7f4;
     padding: 1rem;
@@ -59,7 +60,7 @@ body, .css-1d391kg, .stApp {
     font-size: 0.9rem;
     color: #0f766e;
 }
-/* Chat messages */
+
 .chat-message {
     padding: 0.8rem;
     border-radius: 12px;
@@ -83,7 +84,7 @@ body, .css-1d391kg, .stApp {
 .chat-answer {
     line-height: 1.5;
 }
-/* Buttons */
+
 .stButton>button {
     background-color: #0f766e;
     color: white;
@@ -101,7 +102,7 @@ body, .css-1d391kg, .stApp {
 .stButton>button:hover {
     background-color: #0d5c54;
 }
-/* Bounce for hero title */
+
 @keyframes bounce {
   0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
   40% {transform: translateY(-8px);}
@@ -110,7 +111,8 @@ body, .css-1d391kg, .stApp {
 .hero-title {
     animation: bounce 3s ;
 }
-/* Fade-in for subtitle */
+
+
 @keyframes fadeIn {
     0% {opacity: 0; transform: translateY(10px);}
     100% {opacity: 1; transform: translateY(0);}
@@ -120,7 +122,8 @@ body, .css-1d391kg, .stApp {
     animation-delay: 0.2s;
     opacity: 0; /* start invisible for fade-in */
 }
-/* Fade-in bullets with slight delay for each item */
+
+
 .main-bullets li {
     opacity: 0;
     transform: translateY(10px);
@@ -131,7 +134,8 @@ body, .css-1d391kg, .stApp {
 .main-bullets li:nth-child(3) { animation-delay: 1.0s; }
 .main-bullets li:nth-child(4) { animation-delay: 1.2s; }
 .main-bullets li:nth-child(5) { animation-delay: 1.4s; }    
-/* Slide-in + fade effect for feature cards */
+
+
 @keyframes slideIn {
     0% {opacity: 0; transform: translateY(20px);}
     100% {opacity: 1; transform: translateY(0);}
@@ -142,18 +146,20 @@ body, .css-1d391kg, .stApp {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer; /* looks interactive */
 }
-/* Delay each card so they appear one after another */
+
 .feature-card:nth-child(1) { animation-delay: 0.3s; }
 .feature-card:nth-child(2) { animation-delay: 0.5s; }
 .feature-card:nth-child(3) { animation-delay: 0.7s; }
-/* Sidebar background + padding */
+
+
 [data-testid="stSidebar"] {
     background-color: #e0f7f4;  /* soft teal */
     padding: 1.5rem 1rem;
     border-radius: 12px;
     transition: all 0.3s ease;
 }
-/* Sidebar header style */
+
+
 [data-testid="stSidebar"] h2 {
     font-size: 1.6rem;        /* smaller, sleeker */
     font-weight: 700;
@@ -165,7 +171,7 @@ body, .css-1d391kg, .stApp {
     padding-bottom: 0.6rem;
     animation: fadeIn 0.3s ease-out;
 }
-/* Text area card (URLs) */
+
 .url-card {
     background: #d1f0ec;
     padding: 0.7rem 1rem;
@@ -179,14 +185,14 @@ body, .css-1d391kg, .stApp {
     transform: translateY(-3px) scale(1.01);
     box-shadow: 0 8px 15px rgba(0,0,0,0.12);
 }
-/* Uploader + URL placeholder text */
+
 .upload-card ::placeholder,
 .url-card ::placeholder {
     color: #006666;
     font-weight: 500;
     font-size: 0.9rem;
 }
-/* Uploaded files list */
+
 .file-info {
     background-color: #f0fdfc;
     padding: 0.6rem;
@@ -195,12 +201,13 @@ body, .css-1d391kg, .stApp {
     color: #0f766e;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-/* Hover effect for file info */
+
+
 .file-info:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-/* Recent conversation selectbox */
+
 [data-testid="stSidebar"] .stSelectbox {
     border-radius: 10px;
     transition: all 0.3s ease;
@@ -209,7 +216,7 @@ body, .css-1d391kg, .stApp {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }        
-/* Hover effect for feature cards */
+
 .feature-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -217,12 +224,12 @@ body, .css-1d391kg, .stApp {
     transform: translateY(-5px);
     box-shadow: 0 8px 15px rgba(0,0,0,0.1);
 }
-/* Hover effect for buttons (already partially done) */
+
 .stButton>button:hover {
     transform: translateY(-2px);
     opacity: 0.9;
 }
-/* File info */
+
 .file-info {
     background-color: #e0f7f4;
     padding: 0.6rem;
@@ -252,7 +259,7 @@ body, .css-1d391kg, .stApp {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #f9f9f9;  /* match your theme */
+    background-color: #f9f9f9; 
     text-align: center;
     padding: 10px;
     font-size: 0.85rem;
@@ -272,6 +279,8 @@ class DocAssistant:
         self.conversation_history = []
         self.document_sources = []
 
+    
+
     def initialize_models(self):
         if self.llm is None:
             try:
@@ -282,6 +291,8 @@ class DocAssistant:
                 st.error(f"Error initializing models: {str(e)}")
                 return False
         return True
+
+    
     
     def extract_text_from_pdf(self, pdf_file):
         try:
@@ -294,7 +305,9 @@ class DocAssistant:
         except Exception as e:
             st.error(f"Error reading PDF: {str(e)}")
             return None
-        
+
+
+    
     def extract_text_from_docx(self, docx_file):
         try:
             doc = docx.Document(docx_file)
@@ -305,9 +318,10 @@ class DocAssistant:
         except Exception as e:
             st.error(f"Error reading Word document: {str(e)}")
             return None
+
+
     
     def extract_text_from_url(self, url):
-        """Extract text from web URL"""
         try:
             headers = {'User-Agent': 'Mozilla/5.0'}
             response = requests.get(url, headers=headers, timeout=10)
@@ -324,6 +338,8 @@ class DocAssistant:
         except Exception as e:
             st.error(f"Error extracting text from URL {url}: {str(e)}")
             return None
+
+    
     
     def validate_url(self, url):
         try:
@@ -331,11 +347,12 @@ class DocAssistant:
             return all([result.scheme, result.netloc])
         except:
             return False
+
+
     
     def process_documents(self, uploaded_files=None, urls=None):
         if not self.initialize_models():
             return False
-        
         documents = []
         self.document_sources = []
         progress_bar = st.progress(0)
@@ -408,9 +425,9 @@ class DocAssistant:
                 separators=["\n\n", "\n", " ", ""])
             splits = text_splitter.split_documents(documents)
             self.vectorstore = FAISS.from_documents(splits, self.embeddings)    
+            
             prompt_template = """
             You are an intelligent document assistant. Use the provided context to answer the question accurately and concisely.
-
             Guidelines:
             - Provide clear, accurate answers based on the context
             - If information is not in the documents, say so clearly
@@ -422,6 +439,8 @@ class DocAssistant:
             {input}
             Answer:
             """
+
+            
             PROMPT = PromptTemplate(
                 template=prompt_template,
                 input_variables=["context", "input"]
@@ -445,6 +464,8 @@ class DocAssistant:
         
         status_text.text("⚠️ No documents were processed.")
         return False
+
+
     
     def ask_question(self, question):
         if not self.qa_chain:
@@ -465,6 +486,8 @@ class DocAssistant:
                 return answer
         except Exception as e:
             return f"Error: {str(e)}"
+
+
 
 
 def main():
